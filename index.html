@@ -1,10 +1,69 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCGEgnFT8a-Dbik2W6JqpP88-PwlWfnecE",
-  authDomain: "evu-8921a.firebaseapp.com",
-  projectId: "evu-8921a",
-  storageBucket: "evu-8921a.firebasestorage.app",
-  messagingSenderId: "777966469701",
-  appId: "1:777966469701:web:e782d1df25f7246adf592c",
-  measurementId: "G-3BFDY5B1CM"
-};
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ibrahim Firebase Auth</title>
+</head>
+<body>
+    <h1>Hello Ibrahim 🔥</h1>
+    <p>My website is live!</p>
+
+    <h2>Register</h2>
+    <input type="email" id="email" placeholder="Email"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+    <button onclick="register()">Register</button>
+
+    <h2>Login</h2>
+    <button onclick="login()">Login</button>
+
+    <h2>Reset Password</h2>
+    <button onclick="resetPassword()">Reset Password</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // আপনার নতুন সঠিক কনফিগারেশন (Evu Beta প্রজেক্টের)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGEgnFT8a-Dbik2W6JqpP88-Pw1WfnecE",
+            authDomain: "evu-8921a.firebaseapp.com",
+            projectId: "evu-8921a",
+            storageBucket: "evu-8921a.firebasestorage.app",
+            messagingSenderId: "777966469701",
+            appId: "1:777966469701:web:e782d1df25f7246adf592c",
+            measurementId: "G-3BFDY5B1CM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.register = function() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                sendEmailVerification(userCredential.user);
+                alert("Registration successful! Check your email for verification.");
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+        };
+
+        window.login = function() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            signInWithEmailAndPassword(auth, email, password)
+            .then(() => alert("Login successful!"))
+            .catch((error) => alert(error.message));
+        };
+
+        window.resetPassword = function() {
+            const email = document.getElementById("email").value;
+            sendPasswordResetEmail(auth, email)
+            .then(() => alert("Password reset email sent!"))
+            .catch((error) => alert(error.message));
+        };
+    </script>
+</body>
+</html>
